@@ -1,0 +1,21 @@
+<form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="post-form">
+
+  <input formControlName="titulo" type="text" placeholder="Título" />
+  <select formControlName="categoria">
+    <option value="Academico">Académico</option>
+    <option value="Social">Social</option>
+    <option value="Tecnología">Tecnología</option>
+  </select>
+
+  <label class="upload-label">
+    📷 Subir imagen
+    <input type="file" (change)="onFileChange($event)" />
+  </label>
+  <img *ngIf="imagePreview" [src]="imagePreview" class="preview-img" />
+
+  <google-map height="300px" width="100%" [center]="mapCenter" [zoom]="14" (mapClick)="onMapClick($event)">
+    <map-marker *ngIf="markerPosition" [position]="markerPosition"></map-marker>
+  </google-map>
+  <button type="submit">Publicar</button>
+</form>
+{{test}}

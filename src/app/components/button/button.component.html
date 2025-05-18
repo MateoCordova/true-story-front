@@ -1,0 +1,9 @@
+<button [ngStyle]="customeStyle?customeStyle:{}" [ngClass]="{
+'default':true,
+'disable':!enableButton,
+'small': size ==='small',
+'normal': size ==='normal',
+'large': size ==='large'
+}" [disabled]="!enableButton" (click)="onClick()">
+  {{buttonLabel}}
+</button>

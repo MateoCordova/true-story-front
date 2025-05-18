@@ -1,0 +1,15 @@
+<div class="popup-backdrop" (click)="onClose()">
+  <div style="position: relative;">
+    <div class="close" (click)="onClose()">
+      x
+    </div>
+    <div class="popup-card" (click)="$event.stopPropagation()">
+
+      <img [src]="imageUrl" alt="Location" class="popup-image" />
+      <h2>{{ title }}</h2>
+      <p>{{ description }}</p>
+      <button (click)="onOpenBuy()">Destacar 🌟</button>
+    </div>
+  </div>
+
+</div>

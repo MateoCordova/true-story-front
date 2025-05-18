@@ -1,0 +1,13 @@
+<div class="popup-overlay">
+  <div style="position: relative;">
+    <div class="close" (click)="onClose()">
+      x
+    </div>
+    <div class="popup-content">
+      {{test}}
+      <h2>{{ serviceName }}</h2>
+      <p class="price">Precio: <strong>${{ price }}</strong></p>
+      <button (click)="onAccept()">Aceptar</button>
+    </div>
+  </div>
+</div>

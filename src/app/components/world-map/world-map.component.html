@@ -1,0 +1,31 @@
+<div class="map-container">
+  <google-map height="100%" width="100%" [center]="center" [zoom]="15">
+
+    <!-- <map-marker *ngIf="userMarker" [position]="userMarker.position" [label]="userMarker.label"
+      [title]="userMarker.title" [options]="userMarker.options">
+    </map-marker> -->
+    <map-marker *ngFor="let marker of markers" [position]="marker.position" [label]="marker.label"
+      [title]="marker.title" [options]="marker.options">
+    </map-marker>
+    <map-marker *ngFor="let loc of locations; let i = index" [position]="loc.position" [title]="loc.title"
+      [label]="'📍'" (mapClick)="toggleInfo(i)">
+      <map-info-window *ngIf="loc.infoOpen" style="z-index: -99999;">
+        <div style="text-align: center; width: 200px;">
+          <h3>{{ loc.title }}</h3>
+          <img [src]="loc.photoUrl" alt="photo" width="100%" style="border-radius: 10px; margin-bottom: 8px;" />
+          <p>{{ loc.infoText }}</p>
+        </div>
+      </map-info-window>
+    </map-marker>
+
+  </google-map>
+  {{wallet}}
+</div>
+<app-location-popup *ngIf="objSelected.infoOpen" [title]="objSelected.title" [description]="objSelected.descriptione"
+  [imageUrl]="objSelected.photoUrl" (close)="close()" (buyOpen)="openBuy()">
+</app-location-popup>
+<app-pop-up-buy *ngIf="showBuy" [price]="49.99" serviceName="Diagnóstico" (close)="closeBuy()">
+</app-pop-up-buy>
+<ng-template #test>
+  <div></div>
+</ng-template>
