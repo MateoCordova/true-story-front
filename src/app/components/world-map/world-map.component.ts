@@ -31,7 +31,9 @@ export class WorldMapComponent implements OnInit {
     title: string,
     infoText: string,
     photoUrl: string,
-    infoOpen: boolean
+    infoOpen: boolean,
+    destacado: boolean
+
   }[] = []
 
   constructor(private servicePosts: NearbyPostService, private storage: LocalStorageService) {
@@ -70,7 +72,8 @@ export class WorldMapComponent implements OnInit {
                 title: obj.titulo,
                 infoText: obj.categoria,
                 photoUrl: "data:image/jpeg;base64," + obj.media.data_base64,
-                infoOpen: false
+                infoOpen: false,
+                destacado: obj.destacado
               }
             })
           }).catch((error) => {
@@ -102,7 +105,8 @@ export class WorldMapComponent implements OnInit {
           title: string,
           infoText: string,
           photoUrl: string,
-          infoOpen: boolean
+          infoOpen: boolean,
+          destacado: boolean
         }
         this.storage.setItem("postId", this.locations[i].id)
       }
