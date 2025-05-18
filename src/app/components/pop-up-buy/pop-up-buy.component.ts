@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PaymentService } from '../../services/payment.service';
 import { firstValueFrom } from 'rxjs';
 import { MiniKit, PayCommandInput, Tokens, tokenToDecimals } from '@worldcoin/minikit-js';
+import { LocalStorageService } from '../../storage/local-storage.service';
 
 @Component({
   selector: 'app-pop-up-buy',
@@ -13,10 +14,11 @@ export class PopUpBuyComponent {
   @Input() price: number = 0;
   @Input() serviceName: string = 'Servicio';
   @Output() close = new EventEmitter<void>();
+  showSuccessPopup = false;
 
   test = ""
 
-  constructor(private paymentService: PaymentService) { }
+  constructor(private paymentService: PaymentService, private storage: LocalStorageService) { }
   onClose() {
     this.close.emit();
   }
@@ -42,21 +44,18 @@ export class PopUpBuyComponent {
 
       const { finalPayload } = await MiniKit.commandsAsync.pay(payload)
 
-      this.test = JSON.stringify(finalPayload)
-      // if (finalPayload.status == 'success') {
-      //   // const res = await fetch(`/api/confirm-payment`, {
-      //   //   method: 'POST',
-      //   //   headers: { 'Content-Type': 'application/json' },
-      //   //   body: JSON.stringify(finalPayload),
-      //   // })
-      //   // const payment = await res.json()
-      //   // if (payment.success) {
-      //   //   // Congrats your payment was successful!
-      //   // }
-      // }
-    })).catch((error) => {
-      this.test = JSON.stringify(error)
-    })
+      if (finalPayload.status == 'success') {
+        firstValueFrom(this.paymentService.postValidate(finalPayload, this.storage.getItem("postId") || "")).then((res) => {
+          if (res) {
+            this.showSuccessPopup = true;
+            setTimeout(() => {
+              this.showSuccessPopup = false
+              this.close.emit()
+            }, 2000)
+          }
+        })
+      }
+    }))
 
 
 

@@ -20,6 +20,8 @@ export class CreatePostComponent implements OnInit {
   markerPosition: google.maps.LatLngLiteral | null = null;
   mapCenter: google.maps.LatLngLiteral = { lat: 0, lng: 0 };
   test: string = ""
+  showSuccessPopup = false;
+  options = { animation: google.maps.Animation.DROP, icon: { url: 'assets/logo.png', scaledSize: new google.maps.Size(30, 30) } }
   constructor(private fb: FormBuilder, private postService: PostService, private localService: LocalStorageService) { }
 
   ngOnInit(): void {
@@ -85,18 +87,28 @@ export class CreatePostComponent implements OnInit {
       etiquetas: null,
       georeference: {
         type: 'Point',
-        coordinates: [this.mapCenter.lat, this.mapCenter.lng]
+        coordinates: [this.markerPosition!.lat, this.markerPosition!.lng]
       },
       titulo,
       categoria
     };
 
-    console.log('POST Payload:', payload);
-    firstValueFrom(this.postService.postNewPost(payload, this.localService.getItem("jwt") || "")).then((res) => {
+    let auxs = { ...payload }
+    auxs.media = {
+      filename: "",
+      mime_type: "",
+      data_base64: ""
+    }
+    // this.test = JSON.stringify(auxs)
+    this.test = JSON.stringify(sessionStorage.getItem("walletAddress"))
+    firstValueFrom(this.postService.postNewPost(payload, this.localService.getItem("jwt") || "", sessionStorage.getItem("walletAddress") || "")).then((res) => {
       this.test = JSON.stringify(res)
     }).catch((error) => {
       this.test = JSON.stringify(error)
     })
 
+  }
+  cleanForm() {
+    this.postForm.reset()
   }
 }

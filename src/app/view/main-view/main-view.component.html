@@ -1,23 +1,20 @@
 <div class="main-container">
   <div class="main-content">
-    <!-- <h1>Worldcoin Mini App</h1>
-    <p>Welcome to the main screen.</p> -->
-    <!-- <app-world-map></app-world-map> -->
-    <div *ngIf="false; else map"></div>
+
+    <ng-container *ngIf="screen ==='main'; then map"></ng-container>
+    <ng-container *ngIf="screen ==='post'; then post"></ng-container>
+    <ng-container *ngIf="screen ==='user'; then user"></ng-container>
   </div>
 
   <nav class="bottom-navbar">
-    <button class="nav-button">
+    <button class="nav-button" (click)="selectScreen('main')">
       <span class="material-icons">home</span>
     </button>
-    <button class="nav-button">
-      <span class="material-icons">qr_code_scanner</span>
+    <button class="nav-button" (click)="selectScreen('post')">
+      <span class="material-icons">add_location_alt</span>
     </button>
-    <button class="nav-button">
+    <button class="nav-button" (click)="selectScreen('user')">
       <span class="material-icons">person</span>
-    </button>
-    <button class="nav-button">
-      <span class="material-icons">settings</span>
     </button>
   </nav>
 </div>
@@ -25,7 +22,6 @@
 <ng-template #map>
   <div style="height: 100%;width: 100%;position: absolute;display: flex;flex-direction: column;">
     <div style="display: flex;justify-content: center;align-items: center;">
-      {{wallet}}
       <h1>True Story</h1>
       <img src="../../../assets/logo.png" alt="Worldcoin Logo" style="width: 40px; height:60px" />
     </div>
@@ -41,4 +37,8 @@
     </div>
     <app-create-post style="flex: 1;"></app-create-post>
   </div>
+</ng-template>
+
+<ng-template #user>
+  <app-success-popup></app-success-popup>
 </ng-template>

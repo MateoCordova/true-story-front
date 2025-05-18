@@ -14,8 +14,10 @@
   <img *ngIf="imagePreview" [src]="imagePreview" class="preview-img" />
 
   <google-map height="300px" width="100%" [center]="mapCenter" [zoom]="14" (mapClick)="onMapClick($event)">
-    <map-marker *ngIf="markerPosition" [position]="markerPosition"></map-marker>
+    <map-marker *ngIf="markerPosition" [position]="markerPosition" [options]="options"></map-marker>
   </google-map>
   <button type="submit">Publicar</button>
 </form>
+<app-success-popup *ngIf="showSuccessPopup" title="¡Compra Exitosa!"
+  subtitle="Gracias por tu compra. Post destacado."></app-success-popup>
 {{test}}

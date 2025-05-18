@@ -30,6 +30,7 @@ export class LoginViewComponent implements OnInit {
         if (res1.finalPayload.status === 'success') {
           this.postUserVerify(MiniKit.user, res.nonce as string).then((jwt: any) => {
             this.localStorage.setItem("jwt", ("Bearer " + jwt.access_token) as string)
+            sessionStorage.setItem('walletAddress', MiniKit.user.walletAddress || "")
             this.router.navigate(["/main"])
           }).catch(() => {
             this.navigateError()

@@ -23,9 +23,10 @@
 }
 
 .popup-image {
-  width: 100%;
+  width: 250px;
   border-radius: 16px;
   margin-bottom: 16px;
+  height: 250px;
 }
 
 button {

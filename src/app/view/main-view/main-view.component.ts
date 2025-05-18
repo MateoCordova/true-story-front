@@ -10,20 +10,19 @@ import { MiniKit, verifySiweMessage } from '@worldcoin/minikit-js';
   styleUrl: './main-view.component.css'
 })
 export class MainViewComponent implements OnInit {
-  jwt: string = ""
-  wallet = JSON.stringify(MiniKit.user)
+  screen: string = "main"
   constructor(private storageService: LocalStorageService, private router: Router) {
 
   }
   ngOnInit(): void {
+    // this.storageService.clear()
     if (!this.storageService.getItem("jwt")) {
       this.router.navigate(["/validate"])
-    } else {
-      this.jwt = this.storageService.getItem("jwt")!
-      sessionStorage.setItem('walletAddress', MiniKit.user.walletAddress || "");
-      // this.jwt = JSON.stringify(MiniKit.user)
-      this.storageService.clear()
     }
+  }
+
+  selectScreen(flag: string) {
+    this.screen = flag
   }
 
 }

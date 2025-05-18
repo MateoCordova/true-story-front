@@ -19,6 +19,7 @@ import { LocationPopupComponent } from './components/location-popup/location-pop
 import { CreatePostComponent } from './components/create-post/create-post.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PopUpBuyComponent } from './components/pop-up-buy/pop-up-buy.component';
+import { SuccessPopupComponent } from './components/success-popup/success-popup.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { PopUpBuyComponent } from './components/pop-up-buy/pop-up-buy.component'
     WorldMapComponent,
     LocationPopupComponent,
     CreatePostComponent,
-    PopUpBuyComponent
+    PopUpBuyComponent,
+    SuccessPopupComponent
   ],
   imports: [
     BrowserModule,

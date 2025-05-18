@@ -11,11 +11,24 @@ export class LocationPopupComponent {
   @Input() description: string = '';
   @Input() imageUrl: string = '';
   @Output() buyOpen = new EventEmitter();
+  @Input() post: {
+    id: string,
+    position: { lat: number, lng: number },
+    title: string,
+    infoText: string,
+    photoUrl: string,
+    infoOpen: boolean
+  } = {
+      id: "",
+      position: { lat: 0, lng: 0 },
+      title: "",
+      infoText: "",
+      photoUrl: "",
+      infoOpen: false
+
+    }
 
   @Output() close = new EventEmitter<void>();
-  constructor() {
-    console.log(this.imageUrl)
-  }
   onOpenBuy() {
     this.buyOpen.emit();
   }

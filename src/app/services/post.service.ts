@@ -7,8 +7,8 @@ import { Injectable } from '@angular/core';
 export class PostService {
 
   constructor(private httpService: HttpClient) { }
-  postNewPost(body: any, jwt: string) {
-    return this.httpService.post("https://back-hackathon-azf0cafnh4fqchcc.canadacentral-01.azurewebsites.net//post/crear", body, { headers: { "Authorization": jwt } })
+  postNewPost(body: any, jwt: string, wallet: string) {
+    return this.httpService.post("https://back-hackathon-azf0cafnh4fqchcc.canadacentral-01.azurewebsites.net//post/crear/" + wallet, body, { headers: { "Authorization": jwt } })
   }
 
 }

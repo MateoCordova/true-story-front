@@ -4,10 +4,11 @@
       x
     </div>
     <div class="popup-content">
-      {{test}}
       <h2>{{ serviceName }}</h2>
       <p class="price">Precio: <strong>${{ price }}</strong></p>
       <button (click)="onAccept()">Aceptar</button>
     </div>
   </div>
 </div>
+<app-success-popup *ngIf="showSuccessPopup" title="¡Compra Exitosa!"
+  subtitle="Gracias por tu compra. Post destacado."></app-success-popup>
