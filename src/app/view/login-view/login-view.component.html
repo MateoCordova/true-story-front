@@ -1,11 +1,18 @@
-<!-- {{titleApp}} -->
-<div class="login-container">
+<div class="login-container" *ngIf="!loadingFlag;else loading">
   <div class="login-content">
-    <h1 class="login-title">Login to World ID</h1>
-    <h2 class="login-subtitle">Verify your humanity</h2>
+    <div style="display: flex; flex-direction:column; justify-content:center;align-items: center;">
+      <h1 class="login-title">Iniciar Sesión</h1>
+      <img src="../../../assets/logo.png" alt="Worldcoin Logo" style="width: 200px; height:250px" />
+    </div>
+
+    <h2 class="login-subtitle">Ingresa a la red social de humanos verificados mas grande del mundo.</h2>
     <p class="login-text">
-      To continue, please verify using your World ID. This helps us ensure you’re a real person — not a bot.
+      Enterate de los eventos relevantes cerca de ti.
     </p>
-    <app-button [enableButton]="true" buttonLabel="Click" (clickEvent)="handleLogin()"></app-button>
+    <app-button [enableButton]="true" buttonLabel="Iniciar Sesion" (clickEvent)="handleLogin()"></app-button>
   </div>
 </div>
+<ng-template #loading>
+  <app-loading-spinner style="height: 100%;"></app-loading-spinner>
+
+</ng-template>

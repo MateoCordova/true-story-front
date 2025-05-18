@@ -92,17 +92,16 @@ export class CreatePostComponent implements OnInit {
       titulo,
       categoria
     };
-
-    let auxs = { ...payload }
-    auxs.media = {
-      filename: "",
-      mime_type: "",
-      data_base64: ""
-    }
-    // this.test = JSON.stringify(auxs)
     this.test = JSON.stringify(sessionStorage.getItem("walletAddress"))
     firstValueFrom(this.postService.postNewPost(payload, this.localService.getItem("jwt") || "", sessionStorage.getItem("walletAddress") || "")).then((res) => {
       this.test = JSON.stringify(res)
+      if (res) {
+        this.showSuccessPopup = true;
+        this.cleanForm();
+        setTimeout(() => {
+          this.showSuccessPopup = false;
+        }, 2000)
+      }
     }).catch((error) => {
       this.test = JSON.stringify(error)
     })
@@ -110,5 +109,7 @@ export class CreatePostComponent implements OnInit {
   }
   cleanForm() {
     this.postForm.reset()
+    this.imagePreview = ''
+    this.setCurrentLocation()
   }
 }

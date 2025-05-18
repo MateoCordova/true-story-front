@@ -12,6 +12,8 @@ import { LocalStorageService } from '../../storage/local-storage.service';
   styleUrl: './login-view.component.css'
 })
 export class LoginViewComponent implements OnInit {
+
+  loadingFlag: boolean = false
   constructor(private localStorage: LocalStorageService, private authSer: AuthService, private router: Router) { }
 
   ngOnInit(): void {
@@ -20,6 +22,7 @@ export class LoginViewComponent implements OnInit {
     }
   }
   handleLogin() {
+    this.loadingFlag = true
     this.getNonce().then((res: any) => {
       MiniKit.commandsAsync.walletAuth({
         nonce: res.nonce as string,
@@ -32,6 +35,7 @@ export class LoginViewComponent implements OnInit {
             this.localStorage.setItem("jwt", ("Bearer " + jwt.access_token) as string)
             sessionStorage.setItem('walletAddress', MiniKit.user.walletAddress || "")
             this.router.navigate(["/main"])
+            this.loadingFlag = false
           }).catch(() => {
             this.navigateError()
           })

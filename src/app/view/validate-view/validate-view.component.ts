@@ -12,16 +12,18 @@ import { firstValueFrom } from 'rxjs';
 })
 export class ValidateViewComponent implements OnInit {
   message: any
+  loadingFlag: boolean = false
   constructor(private router: Router, private authSer: AuthService) {
 
   }
   ngOnInit(): void {
-    if (!MiniKit.isInstalled()) {
-      this.navigateError();
-    }
+    // if (!MiniKit.isInstalled()) {
+    //   this.navigateError();
+    // }
   }
 
   async handleVerify() {
+    this.loadingFlag = true
     await MiniKit.commandsAsync.verify({
       action: 'test',
       verification_level: VerificationLevel.Device
@@ -39,7 +41,7 @@ export class ValidateViewComponent implements OnInit {
           this.message = JSON.stringify(responsePostVerify)
           // this.router.navigate([""])
           this.router.navigateByUrl("login")
-          // this.router.navigate(["/login"])
+          this.loadingFlag = false
         }
       }).catch(() => {
         this.navigateError()
