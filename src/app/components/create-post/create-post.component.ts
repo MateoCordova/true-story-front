@@ -20,6 +20,7 @@ export class CreatePostComponent implements OnInit {
   markerPosition: google.maps.LatLngLiteral | null = null;
   mapCenter: google.maps.LatLngLiteral = { lat: 0, lng: 0 };
   test: string = ""
+  loadingFlag: boolean = false
   showSuccessPopup = false;
   options = { animation: google.maps.Animation.DROP, icon: { url: 'assets/logo.png', scaledSize: new google.maps.Size(30, 30) } }
   constructor(private fb: FormBuilder, private postService: PostService, private localService: LocalStorageService) { }
@@ -77,6 +78,7 @@ export class CreatePostComponent implements OnInit {
     if (this.postForm.invalid) return;
 
     const { titulo, categoria } = this.postForm.value;
+    this.loadingFlag = true
 
     const payload = {
       media: {
@@ -104,6 +106,8 @@ export class CreatePostComponent implements OnInit {
       }
     }).catch((error) => {
       this.test = JSON.stringify(error)
+    }).finally(() => {
+      this.loadingFlag = false
     })
 
   }

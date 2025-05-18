@@ -1,4 +1,4 @@
-<form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="post-form">
+<form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="post-form" *ngIf="!loadingFlag;else loading">
 
   <input formControlName="titulo" type="text" placeholder="Título" />
   <select formControlName="categoria">
@@ -18,5 +18,9 @@
   </google-map>
   <button type="submit">Publicar</button>
 </form>
+<ng-template #loading>
+  <app-loading-spinner style="height: 100%;"></app-loading-spinner>
+
+</ng-template>
 <app-success-popup *ngIf="showSuccessPopup" title="Post Creado"
   subtitle="Gracias por tu compartir con nosotros."></app-success-popup>
