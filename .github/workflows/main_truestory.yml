@@ -25,7 +25,7 @@ jobs:
     - run: npm ci
 
     - name: Build Angular app
-      run: npm run build -- --configuration=production
+      run: npm run build-prod
 
     - name: Zip artifact
       run: zip -r release.zip dist/*
