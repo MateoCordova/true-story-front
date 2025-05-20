@@ -5,6 +5,7 @@ const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 
 if (!GOOGLE_MAPS_API_KEY) {
   console.error('❌ Missing required environment variables.');
+  console.log(process.env)
   process.exit(1);
 }
 
