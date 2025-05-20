@@ -1,6 +1,8 @@
 <div class="main-container">
   <div class="main-content">
-
+    <ng-container *ngIf="screen ==='loading'">
+      <app-loading-spinner></app-loading-spinner>
+    </ng-container>
     <ng-container *ngIf="screen ==='main'; then map"></ng-container>
     <ng-container *ngIf="screen ==='post'; then post"></ng-container>
     <ng-container *ngIf="screen ==='user'; then user"></ng-container>

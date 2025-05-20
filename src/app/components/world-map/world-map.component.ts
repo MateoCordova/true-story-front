@@ -85,7 +85,11 @@ export class WorldMapComponent implements OnInit {
         (error) => {
           console.error('Geolocation error:', error);
         }
-      );
+        , {
+          enableHighAccuracy: false,
+          timeout: 5000,
+          maximumAge: 10000
+        });
     } else {
       console.error('Geolocation not supported');
     }

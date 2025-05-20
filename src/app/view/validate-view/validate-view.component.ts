@@ -39,7 +39,6 @@ export class ValidateViewComponent implements OnInit {
       }).then(responsePostVerify => {
         if (responsePostVerify) {
           this.message = JSON.stringify(responsePostVerify)
-          // this.router.navigate([""])
           this.router.navigateByUrl("login")
           this.loadingFlag = false
         }

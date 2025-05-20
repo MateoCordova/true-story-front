@@ -31,15 +31,7 @@ export class CreatePostComponent implements OnInit {
       categoria: ['Academico', Validators.required],
       image: [null]
     });
-
-    this.getCurrentLocation();
     this.setCurrentLocation();
-  }
-
-  getCurrentLocation() {
-    navigator.geolocation.getCurrentPosition(pos => {
-      this.coordinates = [pos.coords.longitude, pos.coords.latitude];
-    });
   }
 
   onFileChange(event: any) {
@@ -63,6 +55,12 @@ export class CreatePostComponent implements OnInit {
         lng: pos.coords.longitude
       };
       this.markerPosition = { ...this.mapCenter };
+    }, (error) => {
+      console.error('Geolocation error:', error);
+    }, {
+      enableHighAccuracy: false,
+      timeout: 5000,
+      maximumAge: 10000
     });
   }
   onMapClick(event: google.maps.MapMouseEvent) {
