@@ -3,6 +3,8 @@ const path = require('path');
 
 // Access environment variables directly from process.env
 const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+console.log(process.env)
+console.log(process.env.GOOGLE_MAPS_API_KEY)
 
 if (!GOOGLE_MAPS_API_KEY) {
   console.error('❌ Missing required environment variables.');
