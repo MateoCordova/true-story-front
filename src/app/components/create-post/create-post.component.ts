@@ -19,7 +19,7 @@ export class CreatePostComponent implements OnInit {
   mimeType: string = '';
   imagePreview: string = '';
   markerPosition: google.maps.LatLngLiteral | null = null;
-  mapCenter: google.maps.LatLngLiteral = { lat: 0, lng: 0 };
+  mapCenter: google.maps.LatLngLiteral = { lat: -0.223307, lng: -78.514063 };
   test: string = ""
   loadingFlag: boolean = false
   showSuccessPopup = false;
