@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     env:
-      GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+      GOOGLE_MAPS_API_KEY: AIzaSyDV8uV4yqTVisPem2UDIGOiB8ApRmFhPuA
     steps:
     - uses: actions/checkout@v3
       with:

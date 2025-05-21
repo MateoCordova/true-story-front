@@ -19,7 +19,7 @@
     </button>
   </nav>
 </div>
-<app-side-menu *ngIf="showMenu" (close)="closeShowMenu()" [user]="user"></app-side-menu>
+<app-side-menu *ngIf="showMenu; else userT" (close)="closeShowMenu()" [user]="user"></app-side-menu>
 
 <ng-template #map>
   <div style="height: 100%;width: 100%;position: absolute;display: flex;flex-direction: column;">
@@ -39,4 +39,7 @@
     </div>
     <app-create-post style="flex: 1;"></app-create-post>
   </div>
+</ng-template>
+<ng-template #userT>
+
 </ng-template>
