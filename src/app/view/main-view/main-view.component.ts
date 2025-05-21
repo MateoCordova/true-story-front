@@ -19,7 +19,7 @@ export class MainViewComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.storageService.clear()
+    // this.storageService.clear()
     if (!this.storageService.getItem("jwt")) {
       this.router.navigate(["/validate"])
     }
