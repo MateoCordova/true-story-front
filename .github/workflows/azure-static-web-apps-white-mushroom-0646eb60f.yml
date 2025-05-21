@@ -4,10 +4,12 @@ on:
   push:
     branches:
     - main
+    - feature/*
   pull_request:
     types: [ opened, synchronize, reopened, closed ]
     branches:
     - main
+    - feature/*
 
 jobs:
   build_and_deploy_job:
@@ -26,6 +28,9 @@ jobs:
 
     - name: Build Angular app
       run: npm run build-prod
+
+    - name: Copy routes.json to output folder
+      run: cp src/routes.json dist/true-story/browser
 
     - name: Build And Deploy
       id: builddeploy
