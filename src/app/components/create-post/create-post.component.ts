@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PostService } from '../../services/post.service';
 import { firstValueFrom } from 'rxjs';
 import { LocalStorageService } from '../../storage/local-storage.service';
+import { User } from '@worldcoin/minikit-js';
 
 @Component({
   selector: 'app-create-post',
@@ -22,13 +23,19 @@ export class CreatePostComponent implements OnInit {
   test: string = ""
   loadingFlag: boolean = false
   showSuccessPopup = false;
+  categories = [{ label: 'Académico', value: 'academico' },
+  { label: 'Social', value: 'social' },
+  { label: 'Cultural', value: 'cultural' },
+  { label: 'Movilidad', value: 'movilidad' },
+  { label: 'Seguridad', value: 'seguridad' },
+  { label: 'Tecnología', value: 'tecnologia' },]
   options = { animation: google.maps.Animation.DROP, icon: { url: 'assets/logo.png', scaledSize: new google.maps.Size(30, 30) } }
   constructor(private fb: FormBuilder, private postService: PostService, private localService: LocalStorageService) { }
 
   ngOnInit(): void {
     this.postForm = this.fb.group({
       titulo: ['', Validators.required],
-      categoria: ['Academico', Validators.required],
+      categoria: ['Académico', Validators.required],
       image: [null]
     });
     this.setCurrentLocation();
@@ -92,8 +99,9 @@ export class CreatePostComponent implements OnInit {
       titulo,
       categoria
     };
-    this.test = JSON.stringify(sessionStorage.getItem("walletAddress"))
-    firstValueFrom(this.postService.postNewPost(payload, this.localService.getItem("jwt") || "", sessionStorage.getItem("walletAddress") || "")).then((res) => {
+    const user: User = JSON.parse(sessionStorage.getItem("user")!)
+    this.test = JSON.stringify(user)
+    firstValueFrom(this.postService.postNewPost(payload, this.localService.getItem("jwt") || "", user.walletAddress || "")).then((res) => {
       this.test = JSON.stringify(res)
       if (res) {
         this.showSuccessPopup = true;

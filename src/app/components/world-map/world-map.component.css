@@ -9,3 +9,31 @@
 google-map {
   border-radius: 0;
 }
+
+.filer {
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  background: white;
+  position: absolute;
+  right: 20px;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 10px;
+  z-index: 900;
+}
+
+.float {
+  transform: translate(-90%, 90%);
+  position: absolute;
+  bottom: 0;
+  padding-top: 8px;
+  left: 0;
+  z-index: 900;
+}
+
+.filterPopUp {
+  width: 150px;
+}

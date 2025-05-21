@@ -1,0 +1,12 @@
+<div class="popup-user" (click)="onClose()">
+  <div class="side-menu">
+    <div class="user-info">
+      <img [src]="user.profilePictureUrl" alt="User" class="avatar" />
+      <div class="name">{{ user.username }}</div>
+    </div>
+
+    <div class="menu-options">
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </div>
+</div>

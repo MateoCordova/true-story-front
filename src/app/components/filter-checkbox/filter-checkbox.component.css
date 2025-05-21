@@ -1,0 +1,67 @@
+.filter-box {
+  background: #000;
+  color: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  font-family: sans-serif;
+}
+
+.filter-box h2 {
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+.title {
+  font-size: 22px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  cursor: pointer;
+  position: relative;
+  padding-left: 30px;
+  user-select: none;
+  font-size: 15px;
+}
+
+/* Hide native checkbox */
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Custom circular checkbox */
+.checkmark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 20px;
+  width: 20px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+/* Checkmark when checked */
+.checkbox-container input:checked~.checkmark {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+/* Show check inside */
+.checkbox-container input:checked~.checkmark::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 6px;
+  height: 10px;
+  border: solid #000;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}

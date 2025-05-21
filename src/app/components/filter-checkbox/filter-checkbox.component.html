@@ -1,0 +1,11 @@
+<div class="filter-box">
+  <div class="title">Filtros</div>
+
+  <div *ngFor="let opt of options; index as i">
+    <label class="checkbox-container">
+      <input type="checkbox" (change)="toggleOption(i)" />
+      <span class="checkmark"></span>
+      {{opt.label}}
+    </label>
+  </div>
+</div>

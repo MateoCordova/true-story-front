@@ -22,6 +22,7 @@
     "@angular/router": "^19.2.0",
     "@worldcoin/minikit-js": "^1.9.4",
     "dotenv": "^16.5.0",
+    "jwt-decode": "^4.0.0",
     "rxjs": "~7.8.0",
     "true-story": "file:",
     "tslib": "^2.3.0",

@@ -2,9 +2,7 @@
 
   <input formControlName="titulo" type="text" placeholder="Título" />
   <select formControlName="categoria">
-    <option value="Academico">Académico</option>
-    <option value="Social">Social</option>
-    <option value="Tecnología">Tecnología</option>
+    <option *ngFor="let cat of categories" [value]="cat.label">{{cat.label}}</option>
   </select>
 
   <label class="upload-label">

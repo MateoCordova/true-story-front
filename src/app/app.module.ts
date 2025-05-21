@@ -20,6 +20,8 @@ import { CreatePostComponent } from './components/create-post/create-post.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { PopUpBuyComponent } from './components/pop-up-buy/pop-up-buy.component';
 import { SuccessPopupComponent } from './components/success-popup/success-popup.component';
+import { FilterCheckboxComponent } from './components/filter-checkbox/filter-checkbox.component';
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { SuccessPopupComponent } from './components/success-popup/success-popup.
     LocationPopupComponent,
     CreatePostComponent,
     PopUpBuyComponent,
-    SuccessPopupComponent
+    SuccessPopupComponent,
+    FilterCheckboxComponent,
+    SideMenuComponent
   ],
   imports: [
     BrowserModule,

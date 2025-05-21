@@ -14,9 +14,13 @@ import { LocalStorageService } from '../../storage/local-storage.service';
 export class LoginViewComponent implements OnInit {
 
   loadingFlag: boolean = false
+  test: string = "test"
   constructor(private localStorage: LocalStorageService, private authSer: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    if (this.localStorage.getItem("jwt")) {
+      this.test = this.localStorage.getItem("jwt")!.replace("Bearer ", "")
+    }
     if (!MiniKit.isInstalled()) {
       this.navigateError()
     }
@@ -33,7 +37,8 @@ export class LoginViewComponent implements OnInit {
         if (res1.finalPayload.status === 'success') {
           this.postUserVerify(MiniKit.user, res.nonce as string).then((jwt: any) => {
             this.localStorage.setItem("jwt", ("Bearer " + jwt.access_token) as string)
-            sessionStorage.setItem('walletAddress', MiniKit.user.walletAddress || "")
+
+            sessionStorage.setItem('user', JSON.stringify(MiniKit.user) || "")
             this.router.navigate(["/main"])
             this.loadingFlag = false
           }).catch(() => {

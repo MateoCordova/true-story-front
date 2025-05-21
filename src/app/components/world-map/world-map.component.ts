@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NearbyPostService } from '../../services/nearby-post.service';
 import { firstValueFrom } from 'rxjs';
 import { MapInfoWindow } from '@angular/google-maps';
@@ -13,8 +13,10 @@ import { LocalStorageService } from '../../storage/local-storage.service';
 })
 export class WorldMapComponent implements OnInit {
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
-  center: google.maps.LatLngLiteral = { lat: 0, lng: 0 };
+  center: google.maps.LatLngLiteral = { lat: -0.223307, lng: -78.514063 };
   wallet = ""
+  showFilers: boolean = false
+  filters: string[] = []
   userMarker: any = null;
   objSelected!: {
     id: string,
@@ -22,7 +24,9 @@ export class WorldMapComponent implements OnInit {
     title: string,
     infoText: string,
     photoUrl: string,
-    infoOpen: boolean
+    infoOpen: boolean,
+    destacado: boolean,
+    username: string
   } | undefined
   showBuy: boolean = false
   locations: {
@@ -32,9 +36,76 @@ export class WorldMapComponent implements OnInit {
     infoText: string,
     photoUrl: string,
     infoOpen: boolean,
-    destacado: boolean
-
+    destacado: boolean,
+    username: string
   }[] = []
+
+  locationsToShow: {
+    id: string
+    position: { lat: number, lng: number },
+    title: string,
+    infoText: string,
+    photoUrl: string,
+    infoOpen: boolean,
+    destacado: boolean,
+    username: string
+  }[] = []
+
+  icons: Record<string, any> = {
+    social: {
+      path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+      scale: 5,
+      fillColor: '#ff0000',
+      fillOpacity: 1,
+      strokeWeight: 1,
+      strokeColor: '#ffffff'
+    },
+
+    cultural: {
+      path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+      scale: 5,
+      fillColor: '#0c51eb',
+      fillOpacity: 1,
+      strokeWeight: 1,
+      strokeColor: '#ffffff'
+    },
+
+    movilidad: {
+      path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+      scale: 5,
+      fillColor: '#ebe40c',
+      fillOpacity: 1,
+      strokeWeight: 1,
+      strokeColor: '#ffffff'
+    },
+
+    seguridad: {
+      path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+      scale: 5,
+      fillColor: '#10bd36',
+      fillOpacity: 1,
+      strokeWeight: 1,
+      strokeColor: '#ffffff'
+    },
+
+    'tecnología': {
+      path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+      scale: 5,
+      fillColor: '#bd8010',
+      fillOpacity: 1,
+      strokeWeight: 1,
+      strokeColor: '#ffffff'
+    },
+
+    'académico': {
+      path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+      scale: 5,
+      fillColor: '#c000ff',
+      fillOpacity: 1,
+      strokeWeight: 1,
+      strokeColor: '#ffffff'
+    },
+  }
 
   constructor(private servicePosts: NearbyPostService, private storage: LocalStorageService) {
 
@@ -42,7 +113,7 @@ export class WorldMapComponent implements OnInit {
   text: string = ""
   ngOnInit() {
     this.getUserLocation();
-    this.wallet = JSON.stringify(MiniKit.user.walletAddress)
+    this.storage.removeItem("postId");
   }
   anim = google.maps.Animation.DROP
 
@@ -62,25 +133,7 @@ export class WorldMapComponent implements OnInit {
             title: 'Your Location',
             options: { animation: google.maps.Animation.DROP, icon: { url: 'assets/logo.png', scaledSize: new google.maps.Size(30, 30) } }
           };
-          this.getPost(position.coords.latitude, position.coords.longitude).then(res => {
-            this.text = JSON.stringify(res)
-            this.locations = (res as []).map((obj: any) => {
-              console.log(obj)
-              return {
-                id: obj._id,
-                position: { lat: obj.georeference.coordinates[0], lng: obj.georeference.coordinates[1] },
-                title: obj.titulo,
-                infoText: obj.categoria,
-                photoUrl: "data:image/jpeg;base64," + obj.media.data_base64,
-                infoOpen: false,
-                destacado: obj.destacado
-              }
-            })
-          }).catch((error) => {
-            this.text = JSON.stringify(error)
-          })
-
-
+          this.setLocationsToShow(this.center)
         },
         (error) => {
           console.error('Geolocation error:', error);
@@ -99,20 +152,44 @@ export class WorldMapComponent implements OnInit {
     return firstValueFrom(this.servicePosts.getPosts(querry));
 
   }
+  setLocationsToShow(position: {
+    lat: number,
+    lng: number
+  }) {
+    this.getPost(position.lat, position.lng).then(res => {
+      this.text = JSON.stringify(res)
+      this.locations = (res as []).map((obj: any) => {
+        return {
+          id: obj._id,
+          position: { lat: obj.georeference.coordinates[0], lng: obj.georeference.coordinates[1] },
+          title: obj.titulo,
+          infoText: obj.categoria,
+          photoUrl: "",
+          infoOpen: false,
+          destacado: obj.destacado,
+          username: obj.created_by.username
+        }
+      })
+      this.locationsToShow = [...this.locations]
+    }).catch((error) => {
+      this.text = JSON.stringify(error)
+    })
+  }
   toggleInfo(index: number) {
 
-    this.locations.forEach((_, i) => {
+    this.locationsToShow.forEach((_, i) => {
       if (i === index) {
-        this.objSelected = this.locations[i] as {
+        this.objSelected = this.locationsToShow[i] as {
           id: string,
           position: { lat: number, lng: number },
           title: string,
           infoText: string,
           photoUrl: string,
           infoOpen: boolean,
-          destacado: boolean
+          destacado: boolean,
+          username: string
         }
-        this.storage.setItem("postId", this.locations[i].id)
+        this.storage.setItem("postId", this.locationsToShow[i].id)
       }
     });
   }
@@ -126,6 +203,40 @@ export class WorldMapComponent implements OnInit {
   }
   closeBuy() {
     this.showBuy = false
+  }
+  closeAll() {
+    this.showBuy = false
+    this.close()
+    this.setLocationsToShow(this.center)
+  }
+  changeShowFilters() {
+    this.showFilers = !this.showFilers
+  }
+  closeFilers() {
+    this.showFilers = false
+  }
+  onFiltersChange(event: any) {
+    this.filters = event
+    console.log(this.filters)
+    console.log(this.locationsToShow)
+    if (this.filters.length === 0) {
+      this.locationsToShow = [...this.locations]
+    } else {
+      console.log(this.filters.includes('académico'))
+      this.locationsToShow = this.locations.filter((l) => {
+        console.log(l.infoText.toLowerCase())
+
+        return this.filters.includes(l.infoText.toLowerCase());
+      })
+      console.log(this.locationsToShow)
+    }
+
+  }
+  getIcon(flag: string, des: boolean) {
+    let aux = { ... this.icons[flag.toLowerCase()] }
+    aux.path = des ? google.maps.SymbolPath.CIRCLE : aux.path
+    aux.scale = des ? 15 : aux.scale
+    return aux
   }
 }
 

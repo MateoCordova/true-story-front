@@ -12,4 +12,9 @@ export class NearbyPostService {
   getPosts(location: string) {
     return this.httpService.get("https://back-hackathon-azf0cafnh4fqchcc.canadacentral-01.azurewebsites.net/posts/cercanos?" + location)
   }
+
+  getMediaPosts(id: string) {
+    return this.httpService.get("https://back-hackathon-azf0cafnh4fqchcc.canadacentral-01.azurewebsites.net/posts/getMedia?post_id=" + id)
+  }
+
 }

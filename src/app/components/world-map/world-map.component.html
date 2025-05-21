@@ -1,11 +1,21 @@
+<div class="filer">
+  <span (click)="changeShowFilters()" class="material-icons">filter_list</span>
+  <div class="float" [ngStyle]="{display: showFilers?'block':'none'}">
+    <div class="filterPopUp">
+      <app-filter-checkbox (filterEvent)="onFiltersChange($event)" (closeEvent)="closeFilers()"></app-filter-checkbox>
+    </div>
+  </div>
+</div>
+
 <div class="map-container">
+
   <google-map height="100%" width="100%" [center]="center" [zoom]="15">
 
     <map-marker *ngIf="userMarker" [position]="userMarker.position" [title]="userMarker.title"
       [options]="userMarker.options">
     </map-marker>
-    <map-marker *ngFor="let loc of locations; let i = index" [position]="loc.position" [title]="loc.title"
-      [label]="!loc.destacado? '📍':'🌟'" (mapClick)="toggleInfo(i)">
+    <map-marker *ngFor="let loc of locationsToShow; let i = index" [position]="loc.position" [title]="loc.title"
+      [label]="!loc.destacado? '📍':'🌟'" (mapClick)="toggleInfo(i)" [icon]="getIcon(loc.infoText,loc.destacado)">
       <map-info-window *ngIf="loc.infoOpen" style="z-index: -99999;">
         <div style="text-align: center; width: 200px;">
           <h3>{{ loc.title }}</h3>
@@ -19,8 +29,5 @@
 </div>
 <app-location-popup *ngIf="objSelected" [post]="objSelected!" (close)="close()" (buyOpen)="openBuy()">
 </app-location-popup>
-<app-pop-up-buy *ngIf="showBuy" [price]="0.1" serviceName="Destacar" (close)="closeBuy()">
+<app-pop-up-buy *ngIf="showBuy" [price]="0.1" serviceName="Destacar" (close)="closeBuy()" (closeAll)="closeAll()">
 </app-pop-up-buy>
-<ng-template #test>
-  <div></div>
-</ng-template>

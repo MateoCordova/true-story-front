@@ -14,6 +14,7 @@ export class PopUpBuyComponent {
   @Input() price: number = 0;
   @Input() serviceName: string = 'Servicio';
   @Output() close = new EventEmitter<void>();
+  @Output() closeAll = new EventEmitter<void>();
   showSuccessPopup = false;
 
   test = ""
@@ -50,7 +51,7 @@ export class PopUpBuyComponent {
             this.showSuccessPopup = true;
             setTimeout(() => {
               this.showSuccessPopup = false
-              this.close.emit()
+              this.closeAll.emit()
             }, 2000)
           }
         })

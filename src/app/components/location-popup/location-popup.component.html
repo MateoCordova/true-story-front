@@ -4,12 +4,19 @@
       x
     </div>
     <div class="popup-card" (click)="$event.stopPropagation()">
+      <ng-container *ngIf="!loadingFlag;else loading">
+        <img [src]="post.photoUrl" alt="Location" class="popup-image" />
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.infoText }}</p>
+        <button *ngIf="show" (click)="onOpenBuy()">Destacar 🌟</button>
+      </ng-container>
 
-      <img [src]="post.photoUrl" alt="Location" class="popup-image" />
-      <h2>{{ post.title }}</h2>
-      <p>{{ post.infoText }}</p>
-      <button (click)="onOpenBuy()">Destacar 🌟</button>
     </div>
   </div>
 
 </div>
+
+<ng-template #loading>
+  <app-loading-spinner style="height: 100%;"></app-loading-spinner>
+
+</ng-template>

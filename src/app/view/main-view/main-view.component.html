@@ -5,7 +5,6 @@
     </ng-container>
     <ng-container *ngIf="screen ==='main'; then map"></ng-container>
     <ng-container *ngIf="screen ==='post'; then post"></ng-container>
-    <ng-container *ngIf="screen ==='user'; then user"></ng-container>
   </div>
 
   <nav class="bottom-navbar">
@@ -15,11 +14,12 @@
     <button class="nav-button" (click)="selectScreen('post')">
       <span class="material-icons">add_location_alt</span>
     </button>
-    <button class="nav-button">
+    <button class="nav-button" (click)="changeShowMenu()">
       <span class="material-icons">person</span>
     </button>
   </nav>
 </div>
+<app-side-menu *ngIf="showMenu" (close)="closeShowMenu()" [user]="user"></app-side-menu>
 
 <ng-template #map>
   <div style="height: 100%;width: 100%;position: absolute;display: flex;flex-direction: column;">
@@ -39,8 +39,4 @@
     </div>
     <app-create-post style="flex: 1;"></app-create-post>
   </div>
-</ng-template>
-
-<ng-template #user>
-  <app-success-popup></app-success-popup>
 </ng-template>
