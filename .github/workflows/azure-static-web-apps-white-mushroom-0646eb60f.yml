@@ -46,7 +46,8 @@ jobs:
         output_location: "dist/true-story/browser" # Built app content directory - optional
         ###### End of Repository/Build Configurations ######
 
-
+    - name: Copy routes.json to output folder
+      run: cp src/assets/routes.json dist/true-story/browser
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
