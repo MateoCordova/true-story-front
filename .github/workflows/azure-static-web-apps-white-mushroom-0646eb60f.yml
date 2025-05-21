@@ -28,7 +28,7 @@ jobs:
       run: npm run build-prod
 
     - name: Copy routes.json to output folder
-      run: cp /src/routes.json dist/true-story/browser
+      run: cp src/routes.json dist/true-story/browser
 
     - name: Build And Deploy
       id: builddeploy
