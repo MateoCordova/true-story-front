@@ -8,6 +8,7 @@ if (!GOOGLE_MAPS_API_KEY) {
   console.log(process.env)
   process.exit(1);
 }
+console.log(process.env.GOOGLE_MAPS_API_KEY)
 
 const prodEnvPath = path.resolve(__dirname, 'src/environments/environment.prod.ts');
 
